@@ -73,5 +73,13 @@ public class goblin : MonoBehaviour
         {
             anim.SetBool("running", true);
         }
+        if (transform.position.x < direction.x)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (transform.position.x > direction.x)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 }
