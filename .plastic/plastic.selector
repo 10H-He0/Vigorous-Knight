@@ -1,0 +1,4 @@
+repository "Vigorous Knight-test@ssl://wechat_os_qy03j-o6kkea4oytd0luenmsm@sh01-plasticscm.unity.cn:8787"
+  path "/"
+    smartbranch "/main/2139338089" 
+     
