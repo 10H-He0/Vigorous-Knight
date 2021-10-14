@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         weapons[0].SetActive(true);
+        anim.SetBool("die", false);
     }
 
     // Update is called once per frame
@@ -57,6 +58,7 @@ public class PlayerControl : MonoBehaviour
         if(HealthBar.health == 0)
         {
             anim.SetBool("die", true);
+            weapons[WeaponNum].SetActive(false);
         }
         else
         {
@@ -102,6 +104,33 @@ public class PlayerControl : MonoBehaviour
                 WeaponNum = 0;
             }
             weapons[WeaponNum].SetActive(true);
+        }
+    }
+
+    public void benn_hurt(int damageNum)
+    {
+        if (ShildBar.shild > 0)
+        {
+            if (ShildBar.shild > damageNum)
+            {
+                ShildBar.shild -= damageNum;
+                damageNum = 0;
+                return;
+            }
+            else
+            {
+                damageNum -= ShildBar.shild;
+                ShildBar.shild = 0;
+                HealthBar.health -= damageNum;
+                if (HealthBar.health < 0) HealthBar.health = 0;
+                damageNum = 0;
+            }
+        }
+        else
+        {
+            HealthBar.health -= damageNum;
+            if (HealthBar.health < 0) HealthBar.health = 0;
+            damageNum = 0;
         }
     }
 }

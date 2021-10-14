@@ -15,12 +15,15 @@ public class goblin : MonoBehaviour
     public static float distance;
     public float time_w;
     public float time_m;
+    public BoxCollider2D col;
 
     // Start is called before the first frame update
     void Start()
     {
         rd = transform.GetComponent<Rigidbody2D>();
         anim = transform.GetComponent<Animator>();
+        col = transform.GetComponent<BoxCollider2D>();
+        anim.SetBool("die", false);
     }
 
     // Update is called once per frame
@@ -29,7 +32,19 @@ public class goblin : MonoBehaviour
         if (health > 0)
         {
             Movement();
+        }
+        else
+        {
+            anim.SetBool("die", true);
+            col.enabled = false;
+        }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "bullet")
+        {
+            health -= 4;
         }
     }
 
@@ -64,15 +79,21 @@ public class goblin : MonoBehaviour
             }
             time_m -= Time.deltaTime;
         }
-        else if (distance <= 4f && distance >= 2f)
+        else if (distance <= 4f && HealthBar.health > 0)
         {
             direction = new Vector2(Player.position.x, Player.position.y);
             transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
         }
-        if (Vector2.Distance(transform.position, direction) > 0.1f)
+        if (Vector2.Distance(transform.position, direction) > 2f)
         {
             anim.SetBool("running", true);
         }
+        else anim.SetBool("running", false);
+        toward();
+    }
+
+    void toward()
+    {
         if (transform.position.x < direction.x)
         {
             transform.localScale = new Vector3(1, 1, 1);
