@@ -9,6 +9,7 @@ public class ShildBar : MonoBehaviour
     public static int shild;
     public static int max = 6;
     public Image shildbar;
+    public float time = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +21,17 @@ public class ShildBar : MonoBehaviour
     {
         shildbar.fillAmount = (float)shild / (float)max;
         text.text = shild.ToString() + "/" + max.ToString();
+        if (shild < max)
+        {
+            if (time > 0)
+            {
+                time -= Time.deltaTime;
+            }
+            else
+            {
+                shild++;
+                time = 1;
+            }
+        }
     }
 }

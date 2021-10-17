@@ -7,9 +7,13 @@ public class PlayerControl : MonoBehaviour
     public Rigidbody2D rd;
     public float speed = 1;
     public Animator anim;
-    public GameObject pyr;
+    public GameObject pyr, dob;
     public GameObject[] weapons;
     public int WeaponNum;
+    public static float x, y, z;
+    public GameObject fire;
+    public float time_s = 3;
+    public bool fireon, dobon = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +24,18 @@ public class PlayerControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         Movement();
         Switchgun();
+        getposition();
+        skill();
+    }
+
+    void getposition()
+    {
+        x = transform.position.x;
+        y = transform.position.y;
+        z = transform.position.z;
     }
 
     public GameObject FindChild(GameObject parent, string na)
@@ -39,7 +52,7 @@ public class PlayerControl : MonoBehaviour
         return obj;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "pickgun" && Input.GetKey(KeyCode.Space))
         {
@@ -131,6 +144,38 @@ public class PlayerControl : MonoBehaviour
             HealthBar.health -= damageNum;
             if (HealthBar.health < 0) HealthBar.health = 0;
             damageNum = 0;
+        }
+    }
+
+    void skill()
+    {
+        if (Input.GetButton("Fire2"))
+        {
+            fireon = true;
+        }
+        if (fireon) 
+        {
+            if (!dobon)
+            {
+                dob = GameObject.Instantiate(weapons[WeaponNum], weapons[WeaponNum].transform.position, Quaternion.identity);
+                dob.transform.GetComponent<SpriteRenderer>().sortingLayerName = "Frontlayer";
+                dob.transform.SetParent(transform);
+                dob.transform.position = new Vector3(dob.transform.position.x + 0.5f, dob.transform.position.y + 0.5f, dob.transform.position.z);
+                dobon = true;
+            }
+            fire.SetActive(true);
+            if (time_s > 0)
+            {
+                time_s -= Time.deltaTime;
+            }
+            else
+            {
+                Destroy(dob);
+                fire.SetActive(false);
+                fireon = false;
+                dobon = false;
+                time_s = 3;
+            }
         }
     }
 }

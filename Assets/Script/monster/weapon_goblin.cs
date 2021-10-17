@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class weapon_goblin : MonoBehaviour
 {
-    public GameObject player;
     public Animator anim;
     public int damageNum = 4;
     public BoxCollider2D col;
@@ -47,7 +46,7 @@ public class weapon_goblin : MonoBehaviour
 
     void weapon_toward()
     {
-        Vector3 direction = transform.position - player.transform.position;
+        Vector3 direction = transform.position - new Vector3(PlayerControl.x, PlayerControl.y, PlayerControl.z);
         transform.up = direction;
         transform.Rotate(0, 0, -90);
     }

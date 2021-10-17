@@ -7,6 +7,7 @@ TagManager:
   - bullet
   - pickgun
   - enemy
+  - room
   layers:
   - Default
   - TransparentFX
@@ -50,6 +51,15 @@ TagManager:
   - name: Frontlayer
     uniqueID: 1059352137
     locked: 0
+  - name: Player
+    uniqueID: 2471047559
+    locked: 0
   - name: weapon
     uniqueID: 3142615663
+    locked: 0
+  - name: transition
+    uniqueID: 2007656687
+    locked: 0
+  - name: gate_transition
+    uniqueID: 3870808927
     locked: 0

@@ -50,7 +50,9 @@ public class pistol : MonoBehaviour
 
     void Fire()
     {
-        GameObject bullet = Instantiate(bulletprefab, muzzlepos.position, Quaternion.identity);
+        //GameObject bullet = Instantiate(bulletprefab, muzzlepos.position, Quaternion.identity);
+        GameObject bullet = Object_Poll.Instance.getObject(bulletprefab);
+        bullet.transform.position = muzzlepos.position;
         float angle = Random.Range(-5f, 5f);
         bullet.GetComponent<bullet>().SetSpeed(Quaternion.AngleAxis(angle, Vector3.forward) * direction);
     }

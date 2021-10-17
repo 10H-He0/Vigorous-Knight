@@ -5,21 +5,23 @@ using UnityEngine;
 public class goblin : MonoBehaviour
 {
     public static int health = 10;
+    public int Heal = 10;
     public float speed;
-    public Transform Player;
+    public Vector2 Player_position;
     public Animator anim;
     public Rigidbody2D rd;
     private bool is_hurt;
-    //private float hurt_time = 0.3f;
     public Vector2 direction;
     public static float distance;
     public float time_w;
     public float time_m;
     public BoxCollider2D col;
+    public GameObject weapon;
 
     // Start is called before the first frame update
     void Start()
     {
+        health = 10;
         rd = transform.GetComponent<Rigidbody2D>();
         anim = transform.GetComponent<Animator>();
         col = transform.GetComponent<BoxCollider2D>();
@@ -29,7 +31,7 @@ public class goblin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health > 0)
+        if (Heal > 0)
         {
             Movement();
         }
@@ -37,6 +39,8 @@ public class goblin : MonoBehaviour
         {
             anim.SetBool("die", true);
             col.enabled = false;
+            weapon.SetActive(false);
+            rd.constraints = RigidbodyConstraints2D.FreezePosition;
         }
     }
 
@@ -44,13 +48,14 @@ public class goblin : MonoBehaviour
     {
         if (collision.tag == "bullet")
         {
-            health -= 4;
+            Heal -= 4;
         }
     }
 
     void Movement()
     {
-        distance = Vector2.Distance(transform.position, Player.position);
+        Player_position = new Vector2(PlayerControl.x, PlayerControl.y);
+        distance = Vector2.Distance(transform.position, Player_position);
         if (distance > 4f)
         {
             transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
@@ -62,7 +67,7 @@ public class goblin : MonoBehaviour
                     {
                         time_w -= Time.deltaTime;
                         anim.SetBool("running", false);
-                       
+
                     }
                     else
                     {
@@ -81,14 +86,19 @@ public class goblin : MonoBehaviour
         }
         else if (distance <= 4f && HealthBar.health > 0)
         {
-            direction = new Vector2(Player.position.x, Player.position.y);
+            direction = Player_position;
             transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
         }
         if (Vector2.Distance(transform.position, direction) > 2f)
         {
             anim.SetBool("running", true);
         }
-        else anim.SetBool("running", false);
+        else
+        {
+            direction = new Vector2(transform.position.x, transform.position.y);
+            transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
+            anim.SetBool("running", false);
+        }
         toward();
     }
 

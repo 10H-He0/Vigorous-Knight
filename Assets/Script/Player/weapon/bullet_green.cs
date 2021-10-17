@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class arrow : MonoBehaviour
+public class bullet_green : MonoBehaviour
 {
     public float speed;
     private Rigidbody2D rd;
@@ -21,7 +21,7 @@ public class arrow : MonoBehaviour
 
     public void SetSpeed(Vector2 direction)
     {
-        rd.velocity = direction * speed;
+        rd.velocity = transform.right * speed;
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class arrow : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != "Player")
+        if (collision.tag != "Player" && collision.tag != "bullet" && collision.tag != "room")
             Destroy(gameObject);
     }
 }

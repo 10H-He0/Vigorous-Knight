@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_begining : MonoBehaviour
 {
-    public GameObject gate;
     public GameObject but;
     public GameObject beg;
     public GameObject sca;
@@ -16,7 +16,6 @@ public class UI_begining : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gate.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,7 +36,7 @@ public class UI_begining : MonoBehaviour
 
     public void gogogo()
     {
-        gameObject.SetActive(false);
-        gate.SetActive(true);
+        Stay.start = true;
+        SceneManager.LoadScene("transition");
     }
 }

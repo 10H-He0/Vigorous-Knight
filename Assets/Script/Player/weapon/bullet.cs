@@ -14,7 +14,7 @@ public class bullet : MonoBehaviour
 
     public void SetSpeed(Vector2 direction)
     {
-        rd.velocity = direction * speed;
+        rd.velocity = direction.normalized * speed;
     }
 
     // Update is called once per frame
@@ -24,7 +24,9 @@ public class bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != "Player")
-            Destroy(gameObject);
+        if (collision.tag != "Player" && collision.tag != "bullet" && collision.tag != "room")
+        {
+            Object_Poll.Instance.pushObject(gameObject);
+        }
     }
 }
