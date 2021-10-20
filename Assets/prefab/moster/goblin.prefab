@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7036000ac3403e143aa44a0032ad81f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Heal: 10
   speed: 3
   Player_position: {x: 0, y: 0}
   anim: {fileID: 0}
@@ -322,3 +323,6 @@ MonoBehaviour:
   time_m: 3
   col: {fileID: 0}
   weapon: {fileID: 7087409701946004102}
+  die_image: {fileID: 8997536616354757284, guid: dd6f51a0d98a35d4fb1ae5d3d8880a12, type: 3}
+  coin: {fileID: 3037349492086337937, guid: d4b410c2ae636e14eacdbaafc5ff13e5, type: 3}
+  magic: {fileID: 1550875252596814774, guid: 2cfc7c2dcc3528944946cada73e046d4, type: 3}

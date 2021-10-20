@@ -7,6 +7,7 @@ public class Stay : MonoBehaviour
 {
     public static int scene;
     public static bool start;
+    public GameObject pistol;
     public GameObject player;
     public GameObject UI;
     public static GameObject UI_copy;
@@ -36,6 +37,10 @@ public class Stay : MonoBehaviour
             MagicBar.magic = MagicBar.max;
             CoinUI.CurrentCoinNum = 0;
             player.transform.position = new Vector3(0, 0, 0);
+            pistol = player.GetComponent<PlayerControl>().FindChild(player, "pistol");
+            player.GetComponent<PlayerControl>().weapons[0] = pistol;
+            player.GetComponent<PlayerControl>().weapons[0].SetActive(true);
+            player.GetComponent<PlayerControl>().weapons[1] = null;
 
             if (SceneManager.GetActiveScene().name == "1-1")
             {

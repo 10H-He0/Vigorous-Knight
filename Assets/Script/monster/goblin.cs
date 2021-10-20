@@ -10,13 +10,15 @@ public class goblin : MonoBehaviour
     public Vector2 Player_position;
     public Animator anim;
     public Rigidbody2D rd;
-    private bool is_hurt;
     public Vector2 direction;
     public static float distance;
     public float time_w;
     public float time_m;
     public BoxCollider2D col;
     public GameObject weapon;
+    public GameObject die_image;
+    public GameObject coin;
+    public GameObject magic;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,14 @@ public class goblin : MonoBehaviour
         else
         {
             anim.SetBool("die", true);
+            GameObject die_i = Instantiate(die_image, transform.position, Quaternion.identity);
+            for (int i = 0; i < Random.Range(2, 4); i++)
+            {
+                Instantiate(coin, new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y + Random.Range(-2, 2), transform.position.z), Quaternion.identity);
+                Instantiate(magic, new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y + Random.Range(-2, 2), transform.position.z), Quaternion.identity);
+            }
+            die_i.transform.localScale = transform.localScale;
+            Destroy(gameObject);
             col.enabled = false;
             weapon.SetActive(false);
             rd.constraints = RigidbodyConstraints2D.FreezePosition;

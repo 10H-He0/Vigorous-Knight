@@ -9,7 +9,7 @@ public class transition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Object_Poll.instance = null;
     }
 
     // Update is called once per frame

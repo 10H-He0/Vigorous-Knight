@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     public Text text;
     public static int health;
-    public static int max = 5;
+    public static int max = 999;
     public Image healthbar;
     // Start is called before the first frame update
     void Start()

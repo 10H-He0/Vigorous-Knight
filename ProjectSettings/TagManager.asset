@@ -8,6 +8,8 @@ TagManager:
   - pickgun
   - enemy
   - room
+  - bulletenemy
+  - collection
   layers:
   - Default
   - TransparentFX
@@ -53,6 +55,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2471047559
+    locked: 0
+  - name: tree
+    uniqueID: 4281444439
     locked: 0
   - name: weapon
     uniqueID: 3142615663

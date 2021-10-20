@@ -42,8 +42,12 @@ public class Gun_Ice : MonoBehaviour
         {
             if (timer == 0)
             {
-                Fire();
-                timer = interval;
+                if (MagicBar.magic >= 2)
+                {
+                    MagicBar.magic -= 2;
+                    Fire();
+                    timer = interval;
+                }
             }
         }
     }

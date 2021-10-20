@@ -12,8 +12,10 @@ public class PlayerControl : MonoBehaviour
     public int WeaponNum;
     public static float x, y, z;
     public GameObject fire;
-    public float time_s = 3;
-    public bool fireon, dobon = false;
+    public float time_s = 3, time_k = 0.2f;
+    public bool fireon, dobon = false, pick;
+    public bool handknife;
+    public GameObject HK;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +30,13 @@ public class PlayerControl : MonoBehaviour
         Movement();
         Switchgun();
         getposition();
-        skill();
+        judge();
+        is_die();
+    }
+
+    void is_die()
+    {
+        if (HealthBar.health > 0) anim.SetBool("die", false);
     }
 
     void getposition()
@@ -36,6 +44,18 @@ public class PlayerControl : MonoBehaviour
         x = transform.position.x;
         y = transform.position.y;
         z = transform.position.z;
+    }
+
+    void judge()
+    {
+        if (handknife)
+        {
+            Handknife();
+        }
+        else
+        {
+            skill();
+        }
     }
 
     public GameObject FindChild(GameObject parent, string na)
@@ -52,16 +72,50 @@ public class PlayerControl : MonoBehaviour
         return obj;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        pick = false;
+        if (collision.tag == "enemy")
+        {
+            weapons[WeaponNum].SetActive(false);
+            handknife = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "enemy")
+        {
+            weapons[WeaponNum].SetActive(true);
+            handknife = false;
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "pickgun" && Input.GetKey(KeyCode.Space))
+        if (collision.tag == "pickgun" && Input.GetKey(KeyCode.Space) && !pick)
         {
             string na = collision.name;
             GameObject change = FindChild(pyr, na);
-            weapons[WeaponNum].SetActive(false);
-            weapons[WeaponNum] = change;
-            weapons[WeaponNum].SetActive(true);
-            Destroy(collision.gameObject);
+            if (weapons[1] == null)
+            {
+                weapons[0].SetActive(false);
+                weapons[1] = change;
+                weapons[1].SetActive(true);
+                WeaponNum = 1;
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                GameObject ins = Instantiate(weapons[WeaponNum].transform.Find(weapons[WeaponNum].name).gameObject, collision.transform.position, Quaternion.identity);
+                ins.name = ins.name.Replace("(Clone)", "");
+                weapons[WeaponNum].SetActive(false);           
+                weapons[WeaponNum] = change;
+                weapons[WeaponNum].SetActive(true);
+                Destroy(collision.gameObject);
+                ins.SetActive(true);
+            }
+            pick = true;
         }
     }
 
@@ -100,6 +154,7 @@ public class PlayerControl : MonoBehaviour
 
     void Switchgun()
     {
+        if (weapons[1] == null) return;
         if (Input.GetKeyDown(KeyCode.Q))
         {
             weapons[WeaponNum].SetActive(false);
@@ -175,6 +230,22 @@ public class PlayerControl : MonoBehaviour
                 fireon = false;
                 dobon = false;
                 time_s = 3;
+            }
+        }
+    }
+
+    void Handknife()
+    {
+        if (time_k > 0)
+        {
+            time_k -= Time.deltaTime;
+        }
+        else
+        {
+            if (Input.GetButton("Fire1"))
+            {
+                HK.SetActive(true);
+                time_k = 0.2f;
             }
         }
     }

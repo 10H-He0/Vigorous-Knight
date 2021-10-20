@@ -42,8 +42,12 @@ public class Crossbow_White : MonoBehaviour
         {
             if (timer == 0)
             {
-                Fire();
-                timer = interval;
+                if (MagicBar.magic >= 3)
+                {
+                    MagicBar.magic -= 3;
+                    Fire();
+                    timer = interval;
+                }
             }
         }
     }

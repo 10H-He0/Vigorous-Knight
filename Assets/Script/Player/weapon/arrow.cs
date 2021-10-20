@@ -31,7 +31,7 @@ public class arrow : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != "Player" && collision.tag != "bullet" && collision.tag != "room")
+        if (collision.tag != "Player" && collision.tag != "bullet" && collision.tag != "room" && collision.tag != "bulletenemy" && collision.tag != "collection")
             Destroy(gameObject);
     }
 }
